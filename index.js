@@ -4,6 +4,17 @@ const app = express();
 const bcrypt = require("bcrypt");
 
 var jwt = require("jsonwebtoken");
+
+//importing db-connection query
+const pool = require("./Config/dbcon");
+
+app.use(express.urlencoded());
+
+//connection method for database connection everytime server starts
+pool.connect().then((row) => {
+  console.log("db is connected :", row._connected);
+});
+
 // var token = jwt.sign({ foo: "bar" }, "shhhhh");
 
 app.get("/", async function (req, res) {
@@ -19,7 +30,12 @@ app.get("/", async function (req, res) {
 
   console.log(passhash);
 
-  res.send(token);
+  const out = await pool.query("SELECT personid, name FROM public.test1;");
+  // return out;
+
+  console.log(out.rows);
+
+  res.send(out.rows);
 });
 
 //authorization for api data by passing token in header
