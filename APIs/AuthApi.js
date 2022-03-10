@@ -32,7 +32,11 @@ router.post("/register", async (req, res) => {
       );
 
       if (addUser.rowCount) {
-        console.log("User add", addUser.rowCount);
+        let userEmail = foundUser.email;
+        let userId = foundUser.userid;
+        var token = jwt.sign({ userEmail, userId }, "shhhhh");
+
+        res.send(token);
       }
 
       res.send(user.email);
@@ -61,7 +65,10 @@ router.post("/login", async (req, res) => {
       const passwordMatch = await bcrypt.compare(submittedPass, storedPass);
       if (passwordMatch) {
         let userEmail = foundUser.email;
-        res.send(userEmail);
+        let userId = foundUser.userid;
+        var token = jwt.sign({ userEmail, userId }, "shhhhh");
+
+        res.send(token);
       } else {
         res.send("Wrong Password");
       }
