@@ -37,3 +37,19 @@ app.get("/checkHeader", async function (req, res) {
   const person = decoded;
   res.send(`username is ${person.name}`);
 });
+
+
+
+
+//verify jwt
+router.get("/verifyJWT", async function (req, res) {
+  var token = await jwt.sign({ foo: "bar" }, "KashifAHmad", {
+    algorithm: "HS256",
+  });
+
+  var decoded = await jwt.verify(token, "KashifAHmad", function (err, decoded) {
+    if (err) res.send(err);
+
+    res.send(decoded);
+  });
+});

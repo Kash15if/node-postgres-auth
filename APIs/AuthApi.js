@@ -8,7 +8,9 @@ var jwt = require("jsonwebtoken");
 //importing db-connection query
 const pool = require("../Config/dbcon");
 
-router.get("/", (req, res) => {});
+router.get("/", (req, res) => {
+  res.send("fdfd");
+});
 
 router.post("/register", async (req, res) => {
   let user = req.body;
